@@ -476,6 +476,29 @@ nav .nav-inner {
 }
 .job-apply:hover { box-shadow: 0 8px 24px var(--accent-glow); transform: translateY(-1px); }
 
+.job-modal {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(5,5,10,0.8); backdrop-filter: blur(6px);
+  align-items: center; justify-content: center; padding: 24px;
+}
+.job-modal.active { display: flex; }
+.job-modal-box {
+  position: relative; max-width: 620px; width: 100%; max-height: 85vh; overflow-y: auto;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+.job-modal-close {
+  position: absolute; top: 16px; right: 20px; background: none; border: none;
+  color: var(--text-secondary); font-size: 28px; line-height: 1; cursor: pointer; transition: color 0.2s;
+}
+.job-modal-close:hover { color: var(--text-primary); }
+.job-modal-title { font-size: 22px; font-weight: 700; margin-bottom: 20px; padding-right: 30px; }
+.job-modal-body p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 14px; }
+.job-modal-body strong { color: var(--text-primary); }
+.job-modal-body a { color: var(--cyan); text-decoration: none; }
+.job-modal-body a:hover { text-decoration: underline; }
+.job-modal .job-apply { display: inline-block; margin-top: 8px; }
+
 .careers-referral {
   padding: 40px; border-radius: 16px; text-align: center;
   background: linear-gradient(135deg, rgba(108,92,231,0.1), rgba(0,206,201,0.1));
@@ -949,7 +972,7 @@ footer {
       <div class="job-card reveal">
         <div class="job-card-top">
           <div class="job-info">
-            <h4>Project Manager</h4>
+            <h4>Software Developers (multiple positions)</h4>
             <div class="job-meta">
               <span>📍 Princeton, NJ / Remote</span>
               <span>💼 5+ years exp.</span>
@@ -958,8 +981,8 @@ footer {
           <span class="job-type">Full-time</span>
         </div>
         <div class="job-card-bottom">
-          <p>Planning, execution & delivery of AI projects</p>
-          <a href="mailto:hr@ayrastech.com?subject=Application: Project Manager" class="job-apply">Apply</a>
+          <p>Design & implement scalable applications</p>
+          <button type="button" class="job-apply" onclick="openJobModal()">Apply</button>
         </div>
       </div>
 
@@ -1000,17 +1023,17 @@ footer {
       <div class="job-card reveal">
         <div class="job-card-top">
           <div class="job-info">
-            <h4>Software Engineer</h4>
+            <h4>Project Manager</h4>
             <div class="job-meta">
               <span>📍 Princeton, NJ / Remote</span>
-              <span>💼 5+ years exp.</span>
+              <span>💼 10+ years exp.</span>
             </div>
           </div>
           <span class="job-type">Full-time</span>
         </div>
         <div class="job-card-bottom">
-          <p>Design & implement scalable applications</p>
-          <a href="mailto:hr@ayrastech.com?subject=Application: Software Engineer" class="job-apply">Apply</a>
+          <p>Planning, execution & delivery of AI projects</p>
+          <a href="mailto:hr@ayrastech.com?subject=Application: Project Manager" class="job-apply">Apply</a>
         </div>
       </div>
     </div>
@@ -1185,7 +1208,47 @@ form.addEventListener('submit', async (e) => {
   submitBtn.disabled = false;
   submitBtn.textContent = 'Send Message';
 });
+
+// Job application modal
+function openJobModal() {
+  document.getElementById('jobModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeJobModal() {
+  document.getElementById('jobModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('jobModal').addEventListener('click', (e) => {
+  if (e.target.id === 'jobModal') closeJobModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeJobModal();
+});
 </script>
+
+<div class="job-modal" id="jobModal">
+  <div class="job-modal-box">
+    <button type="button" class="job-modal-close" onclick="closeJobModal()" aria-label="Close">&times;</button>
+    <h3 class="job-modal-title">Software Developers (Multiple Positions)</h3>
+    <div class="job-modal-body">
+      <p>Ayras Technologies LLC is seeking qualified Software Developers (Multiple Positions)
+      with Bachelor's Degree plus 2 years of experience in Design, code &amp; debug applications
+      in various software languages. Code Analysis, requirements analysis, software review,
+      identification of Code metrics, system risk analysis, and software reliability analysis.
+      Create technical specifications &amp; test plans. Prepare operational Documentation,
+      maintain systems, monitor &amp; correct software Defects. Travel and/or relocate may be
+      required to multiple Unanticipated client locations throughout the USA. Any
+      suitable/relevant education and experience is acceptable.</p>
+      <p><strong>Wage:</strong> $130,603/annum.</p>
+      <p>Mail resume to HR Manager 100 Overlook Center, 2nd Floor, Princeton, NJ-08540 or
+      email to <a href="mailto:hr@ayrastech.com">hr@ayrastech.com</a></p>
+      <p><strong>Employee Referral Program:</strong> Any employee who refers a candidate and is hired for any
+      of the below positions will receive a $1,000 referral bonus. Please send the candidates
+      resume directly to the Human Resources department.</p>
+    </div>
+    <a href="mailto:hr@ayrastech.com?subject=Application: Software Developers" class="job-apply">Apply via Email</a>
+  </div>
+</div>
 
 </body>
 </html>
